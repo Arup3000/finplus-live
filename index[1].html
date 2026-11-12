@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FinPlus – India & Global Financial News</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f6f5;--card:#fff;--ink:#0e1b2c;--mut:#5d6b7a;--line:#dce3e2;--up:#0d8a63;--dn:#c93a45;--brand:#0e3b43;--gold:#b8892b;--chip:#e7eeed}
+:root[data-theme=dark]{--bg:#0b141d;--card:#122130;--ink:#e8eef2;--mut:#93a3b1;--line:#22364a;--up:#3ccf9c;--dn:#ff6b75;--brand:#16505a;--gold:#e2b552;--chip:#1a2d3f}
+*{box-sizing:border-box}html,body{margin:0}
+body{font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif;background:var(--bg);color:var(--ink);display:grid;grid-template-columns:220px 1fr;min-height:100vh}
+h1,h2,h3{font-family:Newsreader,Georgia,serif;margin:0;font-weight:600}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+aside{background:var(--brand);color:#eaf3f2;padding:20px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:6px}
+.logo{font:600 26px Newsreader,serif;padding:0 10px 14px}.logo b{color:#e2b552}
+aside button{background:none;border:0;text-align:left;padding:10px 12px;border-radius:8px;color:#cfe2e0;width:100%}
+aside button.on,aside button:hover{background:rgba(255,255,255,.12);color:#fff}
+.side-note{margin-top:auto;font-size:12px;color:#a9c6c3;padding:10px}
+main{min-width:0}
+.ticker{background:var(--card);border-bottom:1px solid var(--line);overflow:hidden;white-space:nowrap;font-size:13px}
+.ticker div{display:inline-block;padding:8px 0;animation:mq 60s linear infinite}
+.ticker span{margin:0 22px}
+@keyframes mq{to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.ticker div{animation:none}}
+header.top{display:flex;gap:12px;align-items:center;padding:14px 24px;flex-wrap:wrap}
+header.top h2{font-size:24px;margin-right:auto}
+.search{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:9px 12px;border-radius:8px;min-width:230px;font:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:8px 12px;border-radius:8px}
+.view{display:none;padding:0 24px 40px}.view.on{display:block}
+.up{color:var(--up)}.dn{color:var(--dn)}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.m{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;cursor:pointer;text-align:left}
+.m.sel{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.m small{color:var(--mut)}.m .v{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px}
+.cols{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px;margin-top:16px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px}
+.chip{border:0;background:var(--chip);padding:6px 12px;border-radius:99px;font-size:13px}
+.chip.on{background:var(--brand);color:#fff}
+.news{display:flex;flex-direction:column}
+.item{display:flex;gap:12px;padding:14px 0;border-top:1px solid var(--line)}
+.item:first-child{border-top:0}
+.item h3{font-size:18px;line-height:1.3;cursor:pointer}.item h3:hover{color:var(--gold)}
+.meta{font-size:12.5px;color:var(--mut);display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.tag{padding:1px 8px;border-radius:99px;background:var(--chip)}
+.tag.in{background:#fdebc8;color:#6b4a08}.tag.gl{background:#d6ecf5;color:#0b4a63}
+.save{margin-left:auto;background:none;border:0;font-size:20px;color:var(--mut)}.save.on{color:var(--gold)}
+.sent{font-weight:600}
+dialog{border:1px solid var(--line);border-radius:12px;max-width:560px;background:var(--card);color:var(--ink);padding:24px}
+dialog::backdrop{background:rgba(5,15,25,.55)}
+label{display:block;font-size:13px;color:var(--mut);margin:10px 0 4px}
+input,select{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+.res{font:600 26px Newsreader,serif;margin-top:12px}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+td,th{padding:8px 6px;border-top:1px solid var(--line);text-align:left}th{color:var(--mut);font-weight:500;font-size:13px}
+.tools{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.empty{color:var(--mut);padding:20px 0}
+@media(max-width:900px){body{grid-template-columns:1fr}aside{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center}.logo{padding:0 10px 0 0}aside button{width:auto}.side-note{display:none}.cols{grid-template-columns:1fr}}
+dialog{max-height:90vh;overflow:auto;width:min(560px,94vw)}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;padding:10px 12px;border:1px solid var(--line);background:var(--bg);border-radius:8px}
+.opt:hover:not(:disabled){border-color:var(--gold)}.opt.right{border-color:var(--up);background:color-mix(in srgb,var(--up) 15%,var(--bg))}.opt.wrong{border-color:var(--dn);background:color-mix(in srgb,var(--dn) 15%,var(--bg))}
+.fb{margin:8px 0;font-size:14px}
+.fcard{display:flex;flex-direction:column;gap:8px;justify-content:center;align-items:center;text-align:center;width:100%;min-height:150px;padding:20px;border:1px dashed var(--gold);border-radius:12px;background:var(--bg);font-size:17px}
+.fcard.back{border-style:solid;font-size:15px}.fcard small{color:var(--mut)}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.study{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));margin-top:12px}
+.sec{margin:18px 0 8px;padding-top:12px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<aside>
+  <div class="logo">Fin<b>Plus</b></div>
+  <button data-v="dash" class="on">Dashboard</button>
+  <button data-v="news">News feed</button>
+  <button data-v="mkts">Markets</button>
+  <button data-v="tools">Calculators</button>
+  <button data-v="study">Study</button>
+  <button data-v="saved">Saved <span id="sc"></span></button>
+  <div class="side-note" id="note">Prototype for CA Inter ITT. Not investment advice.</div>
+</aside>
+<main>
+  <div class="ticker" aria-hidden="true"><div id="tick"></div></div>
+  <header class="top">
+    <h2 id="title">Dashboard</h2>
+    <input class="search" id="q" type="search" placeholder="Search headlines, e.g. RBI, GST, gold" aria-label="Search news">
+    <button class="btn" id="theme">Dark mode</button>
+    <span class="btn" id="live">Connecting…</span><span class="btn" id="clock"></span>
+  </header>
+
+  <section class="view on" id="dash">
+    <div class="grid" id="cards"></div>
+    <div class="cols">
+      <div class="panel"><div style="display:flex;justify-content:space-between;align-items:baseline"><h3 id="cname"></h3><span id="cval"></span></div><svg id="chart" viewBox="0 0 600 220" width="100%" role="img" aria-label="Price chart"></svg></div>
+      <div class="panel"><h3>Top stories</h3><div class="news" id="top"></div></div>
+    </div>
+  </section>
+
+  <section class="view" id="news">
+    <div class="panel">
+      <div class="tabs" id="reg"></div><div class="tabs" id="cat"></div>
+      <div class="news" id="feed"></div>
+    </div>
+  </section>
+
+  <section class="view" id="mkts">
+    <div class="panel"><table><thead><tr><th>Instrument</th><th>Region</th><th>Last</th><th>Change</th><th>% change</th></tr></thead><tbody id="tbl"></tbody></table></div>
+  </section>
+
+  <section class="view" id="tools">
+    <div class="tools">
+      <div class="panel"><h3>SIP calculator</h3>
+        <label>Monthly investment (₹)</label><input id="s1" type="number" value="10000">
+        <label>Expected return (% p.a.)</label><input id="s2" type="number" value="12">
+        <label>Years</label><input id="s3" type="number" value="10">
+        <div class="res" id="sr"></div><div class="meta" id="sm"></div></div>
+      <div class="panel"><h3>Loan EMI calculator</h3>
+        <label>Loan amount (₹)</label><input id="e1" type="number" value="5000000">
+        <label>Interest rate (% p.a.)</label><input id="e2" type="number" value="8.5" step="0.1">
+        <label>Tenure (years)</label><input id="e3" type="number" value="20">
+        <div class="res" id="er"></div><div class="meta" id="em"></div></div>
+      <div class="panel"><h3>Currency converter</h3>
+        <label>Amount</label><input id="c1" type="number" value="100">
+        <label>From</label><select id="cf"></select>
+        <label>To</label><select id="ct"></select>
+        <div class="res" id="cr"></div><div class="meta">Demo rates, not for transactions.</div></div>
+    </div>
+  </section>
+
+  <section class="view" id="study">
+    <div class="panel"><p id="stat" style="margin:0"></p>
+      <div class="study"><div><h3>Flashcards</h3><div id="sf"></div></div><div><h3>Quiz</h3><div id="sq"></div></div></div></div>
+  </section>
+
+  <section class="view" id="saved">
+    <div class="panel"><div class="news" id="sv"></div></div>
+  </section>
+</main>
+
+<dialog id="dlg"><h3 id="dt"></h3><div class="meta" id="dm"></div><p id="db"></p><p><b>Why it matters:</b> <span id="dw"></span></p><p><a id="dl" target="_blank" rel="noopener noreferrer">Read the full story at the source</a></p><div id="qzs"><h3 class="sec">Check your understanding</h3><div id="qz"></div><h3 class="sec">Flashcard</h3><div id="fc"></div></div><p></p><button class="btn" onclick="dlg.close()">Close</button></dialog>
+
+<script>
+const $=s=>document.querySelector(s), fmt=(n,d=2)=>n.toLocaleString("en-IN",{minimumFractionDigits:d,maximumFractionDigits:d});
+/* ---------- Demo market data (simulated ticks) ---------- */
+const M=[
+ {n:"Sensex",r:"India",p:80250,d:2},{n:"Nifty 50",r:"India",p:24380,d:2},{n:"Bank Nifty",r:"India",p:52900,d:2},
+ {n:"USD/INR",r:"India",p:84.3,d:3},{n:"S&P 500",r:"Global",p:5820,d:2},{n:"Nasdaq",r:"Global",p:18400,d:2},
+ {n:"FTSE 100",r:"Global",p:8150,d:2},{n:"Nikkei 225",r:"Global",p:38900,d:2},{n:"Gold (USD/oz)",r:"Global",p:2680,d:2},
+ {n:"Brent crude",r:"Global",p:74.5,d:2},{n:"Bitcoin (USD)",r:"Global",p:68500,d:0}
+];
+M.forEach(m=>{m.o=m.p;m.h=[];let v=m.p*(1+(Math.random()-.5)*.01);for(let i=0;i<40;i++){v*=1+(Math.random()-.5)*.004;m.h.push(v)}m.p=m.h[39]});
+let sel=0;
+/* ---------- Demo news ---------- */
+const DEMO=[
+["RBI policy stance: what a steady repo rate means for home-loan EMIs","India","Economy","FinPlus Desk",25,"Explainer on how the Reserve Bank's rate decisions flow through to floating-rate loans and deposit yields.","Borrowers on repo-linked loans see EMI changes only when the rate moves; deposit rates tend to follow with a lag.","Neutral"],
+["Nifty consolidates as IT and banking stocks trade in a narrow range","India","Markets","FinPlus Desk",40,"Benchmarks moved sideways as investors weighed earnings updates and global cues.","Range-bound sessions often precede a breakout; watch volumes and FII flows.","Neutral"],
+["GST Council: understanding input tax credit rules before filing","India","Tax & Compliance","FinPlus Tax",75,"A refresher on ITC eligibility, blocked credits and reconciliation of GSTR-2B with books.","Mismatched ITC is among the commonest causes of GST notices; reconcile monthly.","Neutral"],
+["Income tax: old vs new regime, how to choose for the current year","India","Tax & Compliance","FinPlus Tax",120,"Compares slab rates, standard deduction and common exemptions to help salaried taxpayers decide.","The better regime depends on how much you claim in deductions like 80C and HRA.","Neutral"],
+["SEBI tightens disclosure norms for small-cap mutual fund schemes","India","Regulation","FinPlus Desk",150,"New rules aim to improve transparency of liquidity and risk in small-cap strategies.","Better disclosure helps retail investors judge risk before investing.","Positive"],
+["Rupee holds steady as crude prices ease and dollar cools","India","Currency","FinPlus Desk",180,"The domestic currency stayed in a tight band against the dollar.","A stable rupee eases imported inflation and helps importers' forex planning.","Positive"],
+["India's UPI volumes keep rising, deepening digital payments reach","India","Fintech","FinPlus Desk",210,"Monthly UPI transactions continue to grow as merchants and small towns adopt QR payments.","Digital payments widen the formal economy and the tax base.","Positive"],
+["Auditors and AI: how ITT skills reshape the modern CA practice","India","Technology","FinPlus Insights",260,"Cloud accounting, automation and data analytics are changing audit sampling and reporting.","CA students who master IT controls and data tools gain a clear edge.","Positive"],
+["US Federal Reserve signals data-dependent path on interest rates","Global","Economy","FinPlus Global",35,"Policymakers say future moves will track inflation and jobs figures.","Fed decisions drive the dollar, bond yields and capital flows into emerging markets like India.","Neutral"],
+["Wall Street ends mixed as tech earnings meet cautious guidance","Global","Markets","FinPlus Global",55,"Large-cap technology names diverged while defensive sectors held up.","US tech sentiment spills over to Indian IT stocks and Nasdaq-linked funds.","Neutral"],
+["Oil prices slip on demand worries and rising inventories","Global","Commodities","FinPlus Global",95,"Brent eased as traders weighed softer demand against supply decisions.","Lower crude helps India's import bill, inflation and fiscal deficit.","Positive"],
+["Gold stays near record territory as investors seek safe havens","Global","Commodities","FinPlus Global",130,"Bullion remains supported by central-bank buying and geopolitical uncertainty.","Gold prices affect Indian household savings and the current account.","Neutral"],
+["European Central Bank weighs further easing as growth stays weak","Global","Economy","FinPlus Global",170,"Eurozone activity remains subdued, keeping the door open to rate cuts.","Diverging central-bank paths move currencies and trade competitiveness.","Neutral"],
+["Bitcoin swings as regulators debate crypto framework worldwide","Global","Crypto","FinPlus Global",200,"Price volatility continues amid policy discussions in major economies.","In India, gains on virtual digital assets face a specific tax regime.","Negative"],
+["China stimulus hopes lift Asian equities, Nikkei and Hang Seng gain","Global","Markets","FinPlus Global",240,"Regional markets rose on expectations of supportive policy measures.","Asian flows influence FPI allocation decisions toward India.","Positive"],
+["IFRS and Ind AS convergence: key differences students should know","Global","Regulation","FinPlus Insights",300,"Short guide to where Ind AS departs from IFRS and why it matters for reporting.","Cross-border investors rely on comparable financial statements.","Neutral"]
+].map((a,i)=>({id:"d"+i,z:i,t:a[0],r:a[1],c:a[2],s:a[3],m:a[4],b:a[5],w:a[6],sn:a[7]}));
+let N=DEMO.slice();const store=new Map();DEMO.forEach(n=>store.set(n.id,n));
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let saved=new Set(),sstore={};try{saved=new Set(JSON.parse(localStorage.getItem("fp_saved")||"[]").filter(i=>typeof i=="string"));sstore=JSON.parse(localStorage.getItem("fp_saved_items")||"{}")}catch(e){}
+let reg="All",cat="All",q="";
+/* ---------- Render helpers ---------- */
+const ago=m=>m<60?m+" min ago":Math.round(m/60)+" h ago";
+function newsHTML(list){if(!list.length)return'<div class="empty">No stories match. Clear the search or choose another category.</div>';
+ return list.map(n=>`<div class="item"><div><h3 tabindex="0" data-id="${n.id}">${esc(n.t)}</h3><div class="meta"><span class="tag ${n.r=="India"?"in":"gl"}">${n.r}</span><span>${esc(n.c)}</span><span>${esc(n.s)}</span><span>${ago(n.m)}</span>${n.sn?`<span class="sent ${n.sn=="Positive"?"up":n.sn=="Negative"?"dn":""}">${n.sn}</span>`:""}</div></div><button class="save ${saved.has(n.id)?"on":""}" data-s="${n.id}" aria-label="Save story" title="Save">${saved.has(n.id)?"★":"☆"}</button></div>`).join("")}
+function filtered(){return N.filter(n=>(reg=="All"||n.r==reg)&&(cat=="All"||n.c==cat)&&(!q||(n.t+n.b+n.c).toLowerCase().includes(q))).sort((a,b)=>a.m-b.m)}
+function chips(el,arr,cur,fn){el.innerHTML=arr.map(x=>`<button class="chip ${x==cur?"on":""}">${x}</button>`).join("");[...el.children].forEach((b,i)=>b.onclick=()=>fn(arr[i]))}
+function renderNews(){chips($("#reg"),["All","India","Global"],reg,v=>{reg=v;renderNews()});
+ chips($("#cat"),["All",...new Set(N.map(n=>n.c))],cat,v=>{cat=v;renderNews()});
+ $("#feed").innerHTML=newsHTML(filtered());
+ $("#top").innerHTML=newsHTML(filtered().slice(0,5));
+ $("#sv").innerHTML=saved.size?newsHTML([...saved].map(id=>store.get(id)||sstore[id]).filter(Boolean)):'<div class="empty">Nothing saved yet. Select the star on any story to keep it here.</div>';
+ $("#sc").textContent=saved.size?"("+saved.size+")":""}
+function spark(h,up){const mn=Math.min(...h),mx=Math.max(...h),pts=h.map((v,i)=>`${i*3},${28-(v-mn)/(mx-mn||1)*26}`).join(" ");return`<svg viewBox="0 0 117 30" width="100%" height="30" aria-hidden="true"><polyline fill="none" stroke="${up?"var(--up)":"var(--dn)"}" stroke-width="1.6" points="${pts}"/></svg>`}
+function renderMkts(){
+ $("#cards").innerHTML=M.map((m,i)=>{const c=m.p-m.o,pc=c/m.o*100,up=c>=0;return`<button class="m ${i==sel?"sel":""}" data-i="${i}"><small>${m.n}</small><div class="v">${fmt(m.p,m.d)}</div><div class="${up?"up":"dn"}">${up?"▲":"▼"} ${fmt(Math.abs(pc))}%</div>${spark(m.h,up)}</button>`}).join("");
+ $("#tbl").innerHTML=M.map(m=>{const c=m.p-m.o,pc=c/m.o*100,up=c>=0;return`<tr><td>${m.n}</td><td>${m.r}</td><td>${fmt(m.p,m.d)}</td><td class="${up?"up":"dn"}">${up?"+":""}${fmt(c,m.d)}</td><td class="${up?"up":"dn"}">${up?"+":""}${fmt(pc)}%</td></tr>`}).join("");
+ $("#tick").innerHTML=[0,1].map(()=>M.map(m=>{const pc=(m.p-m.o)/m.o*100;return`<span>${m.n} ${fmt(m.p,m.d)} <b class="${pc>=0?"up":"dn"}">${pc>=0?"▲":"▼"}${fmt(Math.abs(pc))}%</b></span>`}).join("")).join("");
+ const m=M[sel],h=m.h,mn=Math.min(...h),mx=Math.max(...h),up=m.p>=m.o;
+ $("#cname").textContent=m.n+" – last 40 ticks";$("#cval").innerHTML=`<b>${fmt(m.p,m.d)}</b>`;
+ const P=h.map((v,i)=>[20+i*(560/39),200-(v-mn)/(mx-mn||1)*170]);
+ const col=up?"var(--up)":"var(--dn)";
+ $("#chart").innerHTML=`<defs><linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity=".25"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>`+[0,1,2,3].map(i=>`<line x1="20" x2="580" y1="${30+i*57}" y2="${30+i*57}" stroke="var(--line)"/>`).join("")+`<path d="M${P.map(p=>p.join(",")).join("L")}L580,200L20,200Z" fill="url(#g)"/><polyline fill="none" stroke="${col}" stroke-width="2" points="${P.map(p=>p.join(",")).join(" ")}"/><text x="22" y="22" fill="var(--mut)" font-size="11">High ${fmt(mx,m.d)}</text><text x="22" y="216" fill="var(--mut)" font-size="11">Low ${fmt(mn,m.d)}</text>`;
+ $("#cards").querySelectorAll(".m").forEach(b=>b.onclick=()=>{sel=+b.dataset.i;renderMkts()})}
+function tick(){if(quotesLive)return;M.forEach(m=>{m.p*=1+(Math.random()-.5)*.003;m.h.push(m.p);m.h.shift()});renderMkts()}
+/* ---------- Calculators ---------- */
+const R={INR:1,USD:84.3,EUR:91.5,GBP:109.8,JPY:0.56,AED:22.95,SGD:63.4};
+Object.keys(R).forEach(k=>{$("#cf").add(new Option(k,k));$("#ct").add(new Option(k,k))});$("#cf").value="USD";$("#ct").value="INR";
+const inr=n=>"₹"+Math.round(n).toLocaleString("en-IN");
+function calc(){
+ const P=+$("#s1").value,r=+$("#s2").value/1200,n=+$("#s3").value*12,fv=r?P*((Math.pow(1+r,n)-1)/r)*(1+r):P*n;
+ $("#sr").textContent=inr(fv);$("#sm").textContent=`Invested ${inr(P*n)} · Estimated gain ${inr(fv-P*n)}`;
+ const L=+$("#e1").value,i=+$("#e2").value/1200,k=+$("#e3").value*12,emi=i?L*i*Math.pow(1+i,k)/(Math.pow(1+i,k)-1):L/k;
+ $("#er").textContent=inr(emi)+" / month";$("#em").textContent=`Total interest ${inr(emi*k-L)} · Total payable ${inr(emi*k)}`;
+ const a=+$("#c1").value||0;$("#cr").textContent=fmt(a*R[$("#cf").value]/R[$("#ct").value])+" "+$("#ct").value}
+document.querySelectorAll("#tools input,#tools select").forEach(e=>e.oninput=calc);
+/* ---------- Events ---------- */
+document.querySelectorAll("aside button").forEach(b=>b.onclick=()=>{document.querySelectorAll("aside button").forEach(x=>x.classList.remove("on"));b.classList.add("on");
+ document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on",v.id==b.dataset.v));$("#title").textContent=b.textContent.replace(/\(.*\)/,"").trim();if(b.dataset.v=="study")renderStudy()});
+$("#q").oninput=e=>{q=e.target.value.trim().toLowerCase();if(q&&!$("#news").classList.contains("on"))document.querySelector('[data-v=news]').click();renderNews()};
+document.addEventListener("click",e=>{
+ const s=e.target.closest("[data-s]");if(s){const id=s.dataset.s;if(saved.has(id)){saved.delete(id);delete sstore[id]}else{saved.add(id);const a=store.get(id);if(a)sstore[id]=a}try{localStorage.setItem("fp_saved",JSON.stringify([...saved]));localStorage.setItem("fp_saved_items",JSON.stringify(sstore))}catch(x){}renderNews();return}
+ const h=e.target.closest("h3[data-id]");if(h)open_(h.dataset.id)});
+document.addEventListener("keydown",e=>{if(e.key=="Enter"&&e.target.matches("h3[data-id]"))open_(e.target.dataset.id)});
+function open_(id){const n=store.get(id)||sstore[id];if(!n)return;const z=n.z>=0?Z[n.z]:null;
+ $("#dt").textContent=n.t;$("#dm").innerHTML=`<span class="tag">${esc(n.r)}</span><span>${esc(n.c)}</span><span>${esc(n.s)}</span><span>${ago(n.m)}</span>`;$("#db").textContent=n.b;$("#dw").textContent=n.w;
+ const a=$("#dl");a.hidden=!/^https?:/.test(n.link||"");if(!a.hidden)a.href=n.link;
+ $("#qzs").hidden=!z;if(z){read.add(n.z);persist();renderStudy();renderQ($("#qz"),z);flash($("#fc"),z)}
+ $("#dlg").showModal()}
+$("#theme").onclick=()=>{const d=document.documentElement,dark=d.dataset.theme=="dark";d.dataset.theme=dark?"light":"dark";$("#theme").textContent=dark?"Dark mode":"Light mode";renderMkts()};
+setInterval(()=>$("#clock").textContent=new Date().toLocaleString("en-IN",{timeZone:"Asia/Kolkata",hour:"2-digit",minute:"2-digit",second:"2-digit",day:"2-digit",month:"short"})+" IST",1000);
+
+/* ---------- Quiz + flashcards (one per story, same order as N) ---------- */
+const QZ=[
+["If the RBI keeps the repo rate unchanged, what happens to EMIs on repo-linked floating-rate loans?",["They rise","They stay the same","They fall","They are cancelled"],1,"Repo-linked loan rates reset only when the repo rate changes.","Repo rate","The rate at which the RBI lends short-term money to commercial banks."],
+["A range-bound market is one where prices mostly...",["Rise every day","Fall every day","Move sideways between support and resistance","Stop trading"],2,"Support is the floor and resistance is the ceiling of the range.","Support and resistance","Price levels where buying (support) or selling (resistance) tends to halt a move."],
+["Which return is used to reconcile Input Tax Credit with purchase books?",["GSTR-1","GSTR-2B","GSTR-9C","CMP-08"],1,"GSTR-2B is the auto-drafted ITC statement.","Input Tax Credit (ITC)","Credit for GST paid on purchases, set off against GST payable on sales."],
+["Which deduction is generally NOT available under the new tax regime?",["Standard deduction for salaried","Section 80C","Employer NPS contribution","Family pension deduction"],1,"Chapter VI-A deductions such as 80C apply under the old regime.","Section 80C","Old-regime deduction up to Rs 1.5 lakh for PPF, ELSS, life insurance premium and similar."],
+["SEBI is the regulator of which market?",["Banking","Insurance","Securities market","Commodity imports"],2,"SEBI regulates stock exchanges, intermediaries and mutual funds.","SEBI","Securities and Exchange Board of India, the capital-market regulator."],
+["A weaker rupee generally makes imports...",["Costlier","Cheaper","Tax-free","Unchanged"],0,"More rupees are needed to buy the same dollar amount.","Currency depreciation","A fall in a currency's value against another, such as the rupee against the dollar."],
+["Which body operates UPI?",["RBI","SEBI","NPCI","NABARD"],2,"NPCI, the National Payments Corporation of India, runs UPI.","UPI","Unified Payments Interface: instant bank-to-bank payments via mobile, operated by NPCI."],
+["Data analytics lets an auditor test...",["Only a small sample","Entire populations of transactions","Nothing electronic","Only cash"],1,"Analytics tools can scan complete datasets and flag exceptions.","General IT controls","Controls over IT environment: access, change management and operations."],
+["When US interest rates stay high, the dollar tends to...",["Strengthen","Collapse","Be fixed","Become illegal"],0,"Higher yields attract capital into dollar assets.","Data-dependent policy","A central bank adjusts rates according to incoming inflation and jobs data."],
+["The Nasdaq index is weighted mainly toward which sector?",["Utilities","Technology","Mining","Textiles"],1,"Many large technology and growth companies list on Nasdaq.","Nasdaq vs S&P 500","Nasdaq is tech-heavy; the S&P 500 tracks 500 large US companies across sectors."],
+["Lower crude oil prices generally help India by...",["Raising the import bill","Reducing the import bill","Banning exports","Raising GST"],1,"India imports most of its crude, so cheaper oil lowers outflow and inflation pressure.","Brent crude","International benchmark price for crude oil, quoted in US dollars per barrel."],
+["Why is gold called a safe-haven asset?",["It pays fixed interest","Investors buy it in uncertain times to preserve value","It is government guaranteed","It never changes price"],1,"Demand rises during uncertainty, though prices still fluctuate.","Safe-haven asset","An asset expected to hold value during market turmoil, such as gold."],
+["Why do central banks cut interest rates?",["To slow borrowing","To stimulate borrowing and growth","To raise taxes","To fix exchange rates"],1,"Cheaper credit encourages spending and investment.","Monetary easing","Lowering rates or injecting liquidity to support growth."],
+["Income from transfer of virtual digital assets in India is taxed at a flat rate of...",["10%","20%","30%","Slab rate"],2,"Section 115BBH sets 30%, and Section 194S adds 1% TDS on transfers.","Virtual Digital Asset (VDA)","Crypto and similar digital assets, with a special tax regime in India."],
+["FPI stands for...",["Fixed Price Index","Foreign Portfolio Investor","Federal Payment Instrument","Financial Policy Institute"],1,"FPIs buy Indian securities without taking control of companies.","FPI","Foreign Portfolio Investor: invests in listed securities, short of strategic ownership."],
+["Indian companies follow accounting standards called...",["US GAAP","Ind AS","IPSAS","Basel III"],1,"Ind AS is largely converged with IFRS.","Ind AS","Indian Accounting Standards, converged with IFRS and notified by the MCA."]
+];
+const Z=QZ.map(z=>({q:z[0],o:z[1],a:z[2],x:z[3],ft:z[4],fd:z[5]}));
+let read=new Set();try{read=new Set(JSON.parse(localStorage.getItem("fp_read")||"[]"))}catch(e){}
+const persist=()=>{try{localStorage.setItem("fp_read",JSON.stringify([...read]))}catch(e){}};
+function renderQ(el,n,done){
+ el.innerHTML=`<p style="margin:0 0 6px"><b>${n.q}</b></p>`+n.o.map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join("")+'<div class="fb" aria-live="polite"></div>';
+ el.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const ok=+b.dataset.i==n.a;
+  el.querySelectorAll(".opt").forEach((x,j)=>{x.disabled=true;if(j==n.a)x.classList.add("right");else if(x==b)x.classList.add("wrong")});
+  el.querySelector(".fb").innerHTML=`<b class="${ok?"up":"dn"}">${ok?"Correct.":"Not quite."}</b> ${n.x}`;done&&done(ok)})}
+function flash(el,n){let f=false;const draw=()=>{el.innerHTML=`<button class="fcard ${f?"back":""}" aria-label="Flip flashcard">${f?n.fd:"<b>"+n.ft+"</b><small>Select to reveal the answer</small>"}</button>`;el.firstChild.onclick=()=>{f=!f;draw()}};draw()}
+let di=0,qs=[],qi=0,qsc=0;
+function renderStudy(){
+ const d=[...read].map(i=>Z[i]).filter(Boolean);
+ $("#stat").textContent=`You have studied ${d.length} of ${Z.length} concepts from the stories you opened. Open more stories to unlock more cards.`;
+ if(!d.length){$("#sf").innerHTML='<div class="empty">Nothing to study yet. Open a story in the News feed and its flashcard and quiz appear here.</div>';$("#sq").innerHTML="";return}
+ di=Math.min(di,d.length-1);
+ $("#sf").innerHTML=`<div id="fc2"></div><div class="nav"><button class="btn" id="pv">Previous</button><span>${di+1} of ${d.length}</span><button class="btn" id="nx">Next</button></div>`;
+ flash($("#fc2"),d[di]);
+ $("#pv").onclick=()=>{di=(di-1+d.length)%d.length;renderStudy()};$("#nx").onclick=()=>{di=(di+1)%d.length;renderStudy()};
+ $("#sq").innerHTML=`<button class="btn" id="go">Start quiz (${d.length} question${d.length>1?"s":""})</button>`;
+ $("#go").onclick=()=>{qs=[...d].sort(()=>Math.random()-.5);qi=0;qsc=0;nextQ()}}
+function nextQ(){
+ if(qi>=qs.length){$("#sq").innerHTML=`<div class="res">${qsc} / ${qs.length}</div><p>${qsc==qs.length?"Full marks.":"Review the flashcards for the ones you missed, then retake the quiz."}</p><button class="btn" id="go">Retake quiz</button>`;$("#go").onclick=()=>{qs.sort(()=>Math.random()-.5);qi=0;qsc=0;nextQ()};return}
+ const n=qs[qi];$("#sq").innerHTML=`<div class="meta">Question ${qi+1} of ${qs.length}</div><div id="qq"></div><button class="btn" id="nq" hidden>${qi+1<qs.length?"Next question":"See score"}</button>`;
+ renderQ($("#qq"),n,ok=>{if(ok)qsc++;$("#nq").hidden=false});$("#nq").onclick=()=>{qi++;nextQ()}}
+/* ---------- Live data (Netlify Functions) ---------- */
+const KW=[["repo","rbi","monetary","rate decision"],["nifty","sensex","range-bound","consolidat"],["gst","input tax","gstr"],["income tax","itr","tax regime","deduction","tds"],["sebi","mutual fund"],["rupee","forex","currency"],["upi","payments","fintech","npci"],["audit","artificial intelligence","automation","analytics"],["federal reserve","fomc","powell"],["nasdaq","wall street","s&p","tech stocks"],["oil","crude","brent","opec"],["gold","bullion","safe haven"],["ecb","european central bank","eurozone"],["bitcoin","crypto","digital asset"],["fpi","foreign investor","foreign portfolio","fii"],["ifrs","ind as","accounting standard"]];
+const concept=t=>{t=t.toLowerCase();let b=-1,bs=0;KW.forEach((k,i)=>{const c=k.filter(w=>t.includes(w)).length;if(c>bs){bs=c;b=i}});return b};
+let quotesLive=false;
+const stamp=()=>new Date().toLocaleTimeString("en-IN",{timeZone:"Asia/Kolkata",hour:"2-digit",minute:"2-digit"});
+async function loadNews(){
+ try{const r=await fetch("/.netlify/functions/news");if(!r.ok)throw 0;const j=await r.json();if(!j.items.length)throw 0;const now=Date.now();
+  N=j.items.map(x=>{const z=concept(x.t+" "+x.b);return{...x,z,m:Math.max(1,Math.round((now-x.pub)/6e4)),sn:"",w:z>=0?"Related concept – "+Z[z].ft+": "+Z[z].fd:"Open the source link to read the full report."}});
+  N.forEach(n=>store.set(n.id,n));$("#live").textContent="News live · "+stamp();$("#note").textContent="News from: "+j.sources.join(", ")+". Each story links to its publisher. Not investment advice."}
+ catch(e){N=DEMO.slice();$("#live").textContent="Demo news (offline)";$("#note").textContent="Live feeds unavailable, showing built-in demo stories. Not investment advice."}
+ renderNews()}
+async function loadQuotes(){
+ try{const j=await (await fetch("/.netlify/functions/quotes")).json();let ok=0;
+  j.quotes.forEach((x,i)=>{if(x&&x.price){const m=M[i];m.p=x.price;m.o=x.prev||x.price;if(x.series&&x.series.length>5){m.h=x.series.slice();while(m.h.length<40)m.h.unshift(m.h[0]);m.h[39]=x.price}ok++}});
+  quotesLive=ok>0;if(ok)$("#cname").dataset.live="1"}catch(e){}
+ renderMkts()}
+renderNews();renderMkts();calc();renderStudy();setInterval(tick,2500);
+loadNews();loadQuotes();setInterval(loadNews,300000);setInterval(loadQuotes,60000);
+</script>
+</body>
+</html>
